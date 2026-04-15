@@ -475,7 +475,7 @@ function App() {
       />
 
       {/* Cookie Consent Banner */}
-      <CookieConsent />
+      <CookieConsent onConfigure={() => openLegal("Cookies")} />
     </div>
   );
 }

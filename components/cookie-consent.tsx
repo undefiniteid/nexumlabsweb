@@ -2,7 +2,11 @@ import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Cookie, X } from "lucide-react";
 
-const CookieConsent: React.FC = () => {
+interface CookieConsentProps {
+  onConfigure?: () => void;
+}
+
+const CookieConsent: React.FC<CookieConsentProps> = ({ onConfigure }) => {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -56,7 +60,7 @@ const CookieConsent: React.FC = () => {
                       Aceptar
                     </button>
                     <button
-                      onClick={handleDecline}
+                      onClick={onConfigure}
                       className="flex-1 bg-white/5 text-white/70 border border-white/10 font-bold py-1.5 px-4 rounded-full text-[11px] hover:bg-white/10 transition-colors whitespace-nowrap"
                     >
                       Configurar
