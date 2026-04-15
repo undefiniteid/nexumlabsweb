@@ -150,15 +150,24 @@ function App() {
         </motion.div>
       </section>
 
-      {/* 2. Subtle Interactive Marquee Banner */}
-      <div className="relative z-10 w-full h-14 md:h-20 overflow-hidden flex items-center border-y border-white/5 bg-transparent my-8">
-        <LinearLoop
-          marqueeText="LA AUTOMATIZACIÓN DEL FUTURO • LA SOLUCIÓN DEL PRESENTE • "
-          speed={0.8}
-          direction="left"
-          interactive={true}
-          className="fill-blue-400/60 transition-colors duration-500 hover:fill-purple-400/80 drop-shadow-[0_0_8px_rgba(56,189,248,0.4)]"
-        />
+      {/* 2. Interactive Marquee Banners (Split into two rows for mobile clarity) */}
+      <div className="relative z-10 w-full flex flex-col gap-2 my-12 overflow-hidden">
+        <div className="h-10 md:h-14 flex items-center bg-transparent border-y border-white/5">
+          <LinearLoop
+            marqueeText="LA AUTOMATIZACIÓN DEL FUTURO • "
+            speed={0.6}
+            direction="left"
+            className="fill-blue-400/60 transition-colors duration-500 hover:fill-purple-400/80 drop-shadow-[0_0_8px_rgba(56,189,248,0.4)]"
+          />
+        </div>
+        <div className="h-10 md:h-14 flex items-center bg-transparent border-y border-white/5">
+          <LinearLoop
+            marqueeText="LA SOLUCIÓN DEL PRESENTE • "
+            speed={-0.6}
+            direction="right"
+            className="fill-purple-400/60 transition-colors duration-500 hover:fill-cyan-400/80 drop-shadow-[0_0_8px_rgba(168,85,247,0.4)]"
+          />
+        </div>
       </div>
 
       {/* 3. Pain Points Module */}

@@ -63,23 +63,46 @@ export const LinearLoop: FC<LinearLoopProps> = ({
   useEffect(() => {
     const measure = () => {
       if (measureRef.current) {
-        setSpacing(measureRef.current.getComputedTextLength());
+        const width = measureRef.current.getComputedTextLength();
+        if (width > 0) {
+          setSpacing(width);
+        }
       }
     };
 
+    // Initial measurement
     measure();
+
     // Re-measure after font load and on resize
-    document.fonts.ready.then(measure);
+    const fontReady = (document as any).fonts?.ready;
+    if (fontReady) {
+      fontReady.then(measure);
+    }
+    
     window.addEventListener("resize", measure);
-    return () => window.removeEventListener("resize", measure);
+    window.addEventListener("load", measure);
+    
+    // Fallback measurement after a delay
+    const timeoutId = setTimeout(measure, 1000);
+
+    return () => {
+      window.removeEventListener("resize", measure);
+      window.removeEventListener("load", measure);
+      clearTimeout(timeoutId);
+    };
   }, [text, className]);
 
   // Effect to measure the total length of the SVG path
   useEffect(() => {
-    if (pathRef.current) {
-      setPathLength(pathRef.current.getTotalLength());
-    }
-  }, []); // Empty dependency array as pathD is constant
+    const measurePath = () => {
+      if (pathRef.current) {
+        setPathLength(pathRef.current.getTotalLength());
+      }
+    };
+    measurePath();
+    window.addEventListener("resize", measurePath);
+    return () => window.removeEventListener("resize", measurePath);
+  }, []);
 
   // Animation loop effect
   useEffect(() => {
@@ -209,7 +232,7 @@ export const LinearLoop: FC<LinearLoopProps> = ({
         </defs>
         {/* Render the visible text only when measurements are ready */}
         {ready && (
-          <text xmlSpace="preserve" className={className ?? "fill-current"}>
+          <text key={spacing} xmlSpace="preserve" className={className ?? "fill-current"}>
             <textPath href={`#${pathId}`} xmlSpace="preserve">
               {/* Render the repeated text spans */}
               {Array.from({ length: repeats }).map((_, i) => (
