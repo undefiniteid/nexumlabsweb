@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Cookie, X, Check, ShieldCheck } from "lucide-react";
+import { Cookie, X, ShieldCheck } from "lucide-react";
 
 const CookieConsent: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
