@@ -16,7 +16,7 @@ const NeonThreads: React.FC = () => {
     let isVisible = true;
 
     // Inicializamos hilos una sola vez
-    const initThreads = (height: number) => {
+    const initThreads = () => {
       threads.length = 0;
       for (let i = 0; i < 8; i++) {
         threads.push({
@@ -54,7 +54,7 @@ const NeonThreads: React.FC = () => {
       if (newW !== W || newH !== H) {
         W = canvas.width = newW;
         H = canvas.height = newH;
-        if (threads.length === 0) initThreads(H);
+        if (threads.length === 0) initThreads();
       }
     }
 
