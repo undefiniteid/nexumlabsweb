@@ -9,15 +9,10 @@ import {
 } from "react";
 
 interface LinearLoopProps {
-  /** The text to be displayed in the marquee */
   marqueeText?: string;
-  /** The speed of the animation. Can be positive or negative. */
   speed?: number;
-  /** Additional CSS classes for styling the text */
   className?: string;
-  /** The direction of the marquee animation */
   direction?: "left" | "right";
-  /** Whether the user can interact with the marquee by dragging */
   interactive?: boolean;
 }
 
@@ -28,71 +23,56 @@ export const LinearLoop: FC<LinearLoopProps> = ({
   direction = "left",
   interactive = true,
 }) => {
-  // Memoize the text to ensure it has a trailing space for seamless looping
   const text = useMemo(() => {
     const hasTrailing = /\s|\u00A0$/.test(marqueeText);
-    return (
-      (hasTrailing ? marqueeText.replace(/\s+$/, "") : marqueeText) + " \u00A0 "
-    );
+    return (hasTrailing ? marqueeText.replace(/\s+$/, "") : marqueeText) + " \u00A0 ";
   }, [marqueeText]);
 
-  // Refs for SVG elements
-  const measureRef = useRef<SVGTextElement | null>(null);
+  const measureRef = useRef<HTMLSpanElement | null>(null);
   const tspansRef = useRef<SVGTSpanElement[]>([]);
   const pathRef = useRef<SVGPathElement | null>(null);
 
-  // State for measurements
   const [pathLength, setPathLength] = useState(0);
   const [spacing, setSpacing] = useState(0);
 
-  // Unique ID for the SVG path
   const uid = useId();
-  const pathId = `linear-path-${uid.replace(/:/g, '')}`;
-
-  // Define the SVG path as a straight horizontal line.
-  // M is "moveto", L is "lineto". This creates a line from x=-1000 to x=6000 at y=90.
+  const pathId = `linear-path-${uid.replace(/:/g, "")}`;
   const pathD = "M-1000,90 L6000,90";
 
-  // Refs for interactive dragging logic
   const dragRef = useRef(false);
   const lastXRef = useRef(0);
   const dirRef = useRef<"left" | "right">(direction);
-  const velRef = useRef(0); // Velocity of the drag
+  const velRef = useRef(0);
 
-  // Effect to measure the width of a single text instance
+  // Measure text width using an off-screen HTML span
   useEffect(() => {
     const measure = () => {
       if (measureRef.current) {
-        const width = measureRef.current.getComputedTextLength();
+        const width = measureRef.current.getBoundingClientRect().width;
         if (width > 0) {
           setSpacing(width);
         }
       }
     };
 
-    // Initial measurement
     measure();
 
-    // Re-measure after font load and on resize
+    const observer = new ResizeObserver(measure);
+    if (measureRef.current) observer.observe(measureRef.current);
+
     const fontReady = (document as any).fonts?.ready;
-    if (fontReady) {
-      fontReady.then(measure);
-    }
+    if (fontReady) fontReady.then(measure);
     
-    window.addEventListener("resize", measure);
     window.addEventListener("load", measure);
-    
-    // Fallback measurement after a delay
-    const timeoutId = setTimeout(measure, 1000);
+    const timeoutId = setTimeout(measure, 500);
 
     return () => {
-      window.removeEventListener("resize", measure);
+      observer.disconnect();
       window.removeEventListener("load", measure);
       clearTimeout(timeoutId);
     };
-  }, [text, className]);
+  }, [text]);
 
-  // Effect to measure the total length of the SVG path
   useEffect(() => {
     const measurePath = () => {
       if (pathRef.current) {
@@ -104,9 +84,8 @@ export const LinearLoop: FC<LinearLoopProps> = ({
     return () => window.removeEventListener("resize", measurePath);
   }, []);
 
-  // Animation loop effect
   useEffect(() => {
-    if (!spacing) return; // Wait until spacing is calculated
+    if (!spacing) return;
 
     let frame: number;
     const step = () => {
@@ -114,41 +93,26 @@ export const LinearLoop: FC<LinearLoopProps> = ({
         if (!t) return;
         let x = parseFloat(t.getAttribute("x") || "0");
 
-        // If not dragging, move the text based on speed and direction
         if (!dragRef.current) {
-          const delta =
-            dirRef.current === "right" ? Math.abs(speed) : -Math.abs(speed);
+          const delta = dirRef.current === "right" ? Math.abs(speed) : -Math.abs(speed);
           x += delta;
         }
 
-        // Logic to wrap the text around for an infinite loop
-        // Each text instance should maintain its relative position
         const totalWidth = tspansRef.current.length * spacing;
-        if (x < -spacing) {
-          x = x + totalWidth;
-        }
-        if (x > totalWidth - spacing) {
-          x = x - totalWidth;
-        }
+        if (x < -spacing) x += totalWidth;
+        if (x > totalWidth - spacing) x -= totalWidth;
 
         t.setAttribute("x", x.toString());
       });
       frame = requestAnimationFrame(step);
     };
 
-    // Start the animation
     step();
-
-    // Cleanup function to cancel the animation frame on component unmount
     return () => cancelAnimationFrame(frame);
   }, [spacing, speed]);
 
-  // Calculate how many times the text needs to repeat to fill the path
-  const repeats =
-    pathLength && spacing ? Math.ceil(pathLength / spacing) + 2 : 0;
+  const repeats = pathLength && spacing ? Math.ceil(pathLength / spacing) + 2 : 0;
   const ready = pathLength > 0 && spacing > 0;
-
-  // --- Pointer (Mouse/Touch) Event Handlers for Interaction ---
 
   const onPointerDown = (e: PointerEvent) => {
     if (!interactive) return;
@@ -162,23 +126,15 @@ export const LinearLoop: FC<LinearLoopProps> = ({
     if (!interactive || !dragRef.current) return;
     const dx = e.clientX - lastXRef.current;
     lastXRef.current = e.clientX;
-    velRef.current = dx; // Store velocity for flicking effect
+    velRef.current = dx;
 
-    // Move each tspan element based on the drag distance
     tspansRef.current.forEach((t) => {
       if (!t) return;
       let x = parseFloat(t.getAttribute("x") || "0");
       x += dx;
-
-      // Maintain proper wrapping with consistent spacing
       const totalWidth = tspansRef.current.length * spacing;
-      if (x < -spacing) {
-        x = x + totalWidth;
-      }
-      if (x > totalWidth - spacing) {
-        x = x - totalWidth;
-      }
-
+      if (x < -spacing) x += totalWidth;
+      if (x > totalWidth - spacing) x -= totalWidth;
       t.setAttribute("x", x.toString());
     });
   };
@@ -186,62 +142,50 @@ export const LinearLoop: FC<LinearLoopProps> = ({
   const endDrag = () => {
     if (!interactive) return;
     dragRef.current = false;
-    // Set the animation direction based on the final drag velocity (flick)
     if (Math.abs(velRef.current) > 1) {
-        dirRef.current = velRef.current > 0 ? "right" : "left";
+      dirRef.current = velRef.current > 0 ? "right" : "left";
     }
   };
 
-  // Dynamically set the cursor style based on interaction state
-  const cursorStyle = interactive
-    ? dragRef.current
-      ? "grabbing"
-      : "grab"
-    : "auto";
-
   return (
     <div
-      className="w-full"
-      style={{ visibility: ready ? "visible" : "hidden", cursor: cursorStyle }}
+      className="w-full relative"
+      style={{ visibility: ready ? "visible" : "hidden", cursor: interactive ? (dragRef.current ? "grabbing" : "grab") : "auto" }}
       onPointerDown={onPointerDown}
       onPointerMove={onPointerMove}
       onPointerUp={endDrag}
       onPointerLeave={endDrag}
     >
+      {/* Robust measurement span (off-screen) */}
+      <span
+        ref={measureRef}
+        style={{
+          position: "absolute",
+          top: -9999,
+          left: -9999,
+          whiteSpace: "pre",
+          visibility: "hidden",
+        }}
+        className="text-[1.8rem] md:text-[3rem] font-bold tracking-[6px] uppercase"
+      >
+        {text}
+      </span>
+
       <svg
         className="select-none w-full overflow-visible block text-[1.8rem] md:text-[3rem] font-bold tracking-[6px] uppercase leading-none"
-        viewBox="0 0 1440 160" // Adjusted viewBox for better vertical alignment
+        viewBox="0 0 1440 160"
       >
-        {/* Hidden text element used only for measuring the width */}
-        <text
-          ref={measureRef}
-          xmlSpace="preserve"
-          style={{ visibility: "hidden", opacity: 0, pointerEvents: "none" }}
-        >
-          {text}
-        </text>
         <defs>
-          {/* The invisible path the text will follow */}
-          <path
-            ref={pathRef}
-            id={pathId}
-            d={pathD}
-            fill="none"
-            stroke="transparent"
-          />
+          <path ref={pathRef} id={pathId} d={pathD} fill="none" stroke="transparent" />
         </defs>
-        {/* Render the visible text only when measurements are ready */}
         {ready && (
           <text key={spacing} xmlSpace="preserve" className={className ?? "fill-current"}>
             <textPath href={`#${pathId}`} xmlSpace="preserve">
-              {/* Render the repeated text spans */}
               {Array.from({ length: repeats }).map((_, i) => (
                 <tspan
                   key={i}
                   x={i * spacing}
-                  ref={(el) => {
-                    if (el) tspansRef.current[i] = el;
-                  }}
+                  ref={(el) => { if (el) tspansRef.current[i] = el; }}
                 >
                   {text}
                 </tspan>
