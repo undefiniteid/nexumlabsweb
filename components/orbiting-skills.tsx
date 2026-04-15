@@ -193,21 +193,23 @@ const OrbitingSkill = memo(({ config, angle }: OrbitingSkillProps) => {
 
   return (
     <div
-      className="absolute top-1/2 left-1/2 transition-all duration-300 ease-out"
+      className="absolute top-1/2 left-1/2"
       style={{
         width: `${size}px`,
         height: `${size}px`,
         transform: `translate(calc(${x}px - 50%), calc(${y}px - 50%))`,
         zIndex: isHovered ? 20 : 10,
       }}
-      onMouseEnter={() => setIsHovered(true)}
+      onMouseEnter={() => {
+        if (window.matchMedia('(hover: hover)').matches) setIsHovered(true);
+      }}
       onMouseLeave={() => setIsHovered(false)}
     >
       <div
         className={`
           relative w-full h-full p-2 bg-gray-800/90 backdrop-blur-sm
           rounded-full flex items-center justify-center
-          transition-all duration-300 cursor-pointer
+          transition-transform duration-300 cursor-pointer
           ${isHovered ? 'scale-125 shadow-2xl' : 'shadow-lg hover:shadow-xl'}
         `}
         style={{
@@ -301,15 +303,18 @@ export default function OrbitingSkills() {
     return () => cancelAnimationFrame(animationFrameId);
   }, [isPaused]);
 
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+  const radiusMultiplier = isMobile ? 0.65 : 1;
+
   const orbitConfigs: Array<{ radius: number; glowColor: GlowColor; delay: number }> = [
-    { radius: 100, glowColor: 'cyan', delay: 0 },
-    { radius: 180, glowColor: 'purple', delay: 1.5 }
+    { radius: 100 * radiusMultiplier, glowColor: 'cyan', delay: 0 },
+    { radius: 180 * radiusMultiplier, glowColor: 'purple', delay: 1.5 }
   ];
 
   return (
     <div className="relative flex items-center justify-center">
       <div 
-        className="relative w-[320px] h-[320px] md:w-[450px] md:h-[450px] flex items-center justify-center -ml-8 md:ml-0 scale-90 md:scale-100"
+        className="relative w-[280px] h-[300px] md:w-[450px] md:h-[450px] flex items-center justify-center -ml-2 md:ml-0"
         onMouseEnter={() => {
           if (window.matchMedia('(hover: hover)').matches) setIsPaused(true);
         }}
@@ -317,11 +322,11 @@ export default function OrbitingSkills() {
       >
         
         {/* Central "Code" Icon with enhanced glow */}
-        <div className="w-20 h-20 bg-gradient-to-br from-gray-700 to-gray-900 rounded-full flex items-center justify-center z-10 relative shadow-2xl">
+        <div className={`${isMobile ? 'w-12 h-12' : 'w-20 h-20'} bg-gradient-to-br from-gray-700 to-gray-900 rounded-full flex items-center justify-center z-10 relative shadow-2xl`}>
           <div className="absolute inset-0 rounded-full bg-cyan-500/30 blur-xl animate-pulse"></div>
           <div className="absolute inset-0 rounded-full bg-purple-500/20 blur-2xl animate-pulse" style={{ animationDelay: '1s' }}></div>
           <div className="relative z-10">
-            <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="url(#gradient)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <svg xmlns="http://www.w3.org/2000/svg" width={isMobile ? "24" : "36"} height={isMobile ? "24" : "36"} viewBox="0 0 24 24" fill="none" stroke="url(#gradient)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <defs>
                 <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
                   <stop offset="0%" stopColor="#06B6D4" />
@@ -350,7 +355,11 @@ export default function OrbitingSkills() {
           return (
             <OrbitingSkill
               key={config.id}
-              config={config}
+              config={{
+                ...config,
+                orbitRadius: config.orbitRadius * radiusMultiplier,
+                size: isMobile ? config.size * 0.8 : config.size
+              }}
               angle={angle}
             />
           );
