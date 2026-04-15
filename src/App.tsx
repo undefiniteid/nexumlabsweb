@@ -151,7 +151,7 @@ function App() {
       </section>
 
       {/* 2. Interactive Marquee Banner */}
-      <div className="relative z-10 w-full h-14 md:h-20 overflow-hidden flex items-center border-y border-white/5 bg-transparent my-12">
+      <div className="relative z-10 w-full h-16 md:h-24 overflow-hidden flex items-center border-y border-white/5 bg-transparent my-12">
         <LinearLoop
           marqueeText="LA AUTOMATIZACIÓN DEL FUTURO • LA SOLUCIÓN DEL PRESENTE • "
           speed={0.8}

@@ -173,10 +173,10 @@ export const LinearLoop: FC<LinearLoopProps> = ({
 
       <svg
         className="select-none w-full overflow-visible block text-[1.8rem] md:text-[3rem] font-bold tracking-[6px] uppercase leading-none"
-        viewBox="0 0 1440 160"
+        viewBox="0 0 1440 200"
       >
         <defs>
-          <path ref={pathRef} id={pathId} d={pathD} fill="none" stroke="transparent" />
+          <path ref={pathRef} id={pathId} d="M-10000,120 L10000,120" fill="none" stroke="transparent" />
         </defs>
         {ready && (
           <text key={spacing} xmlSpace="preserve" className={className ?? "fill-current"}>
