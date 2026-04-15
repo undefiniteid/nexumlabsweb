@@ -13,27 +13,17 @@ const NeonThreads: React.FC = () => {
     let W: number, H: number;
     let t = 0;
     const threads: any[] = [];
-    let isVisible = false;
+    let isVisible = true;
 
-    const observer = new IntersectionObserver((entries) => {
-      isVisible = entries[0].isIntersecting;
-    }, { threshold: 0.01 });
-
-    observer.observe(canvas);
-
-    function resize() {
-      if (!canvas || !canvas.parentElement) return;
-      W = canvas.width = canvas.parentElement.clientWidth;
-      H = canvas.height = canvas.parentElement.clientHeight;
-      
-      // Re-inicializamos hilos al cambiar tamaño para que se ajusten a la nueva H
+    // Inicializamos hilos una sola vez
+    const initThreads = (height: number) => {
       threads.length = 0;
       for (let i = 0; i < 8; i++) {
         threads.push({
-          yBase: H * (0.1 + (i / 7) * 0.8),
-          a1: H * 0.15 + Math.random() * H * 0.05,
-          a2: H * 0.05 + Math.random() * H * 0.03,
-          a3: H * 0.02 + Math.random() * H * 0.02,
+          yRel: 0.1 + (i / 7) * 0.8, // Posición relativa 0-1
+          a1Rel: 0.15 + Math.random() * 0.05,
+          a2Rel: 0.05 + Math.random() * 0.03,
+          a3Rel: 0.02 + Math.random() * 0.02,
           f1: 0.3 + Math.random() * 0.2,
           f2: 0.6 + Math.random() * 0.3,
           f3: 1.0 + Math.random() * 0.4,
@@ -45,27 +35,49 @@ const NeonThreads: React.FC = () => {
           glow: 8 + Math.random() * 12,
           alpha: 0.5 + Math.random() * 0.4,
           glowAlpha: 0.04 + Math.random() * 0.04,
-          hue: 190 + Math.random() * 100, // Ajustado a gama Azul-Púrpura de la web
+          hue: 190 + Math.random() * 100,
         });
+      }
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      isVisible = entries[0].isIntersecting;
+    }, { threshold: 0.01 });
+
+    observer.observe(canvas);
+
+    function resize() {
+      if (!canvas || !canvas.parentElement) return;
+      const newW = canvas.parentElement.clientWidth;
+      const newH = canvas.parentElement.clientHeight;
+      
+      if (newW !== W || newH !== H) {
+        W = canvas.width = newW;
+        H = canvas.height = newH;
+        if (threads.length === 0) initThreads(H);
       }
     }
 
     function draw() {
-      if (isVisible) {
-        // Fondo con rastro
+      if (isVisible && threads.length > 0) {
         ctx!.fillStyle = 'rgba(8, 0, 15, 0.12)';
         ctx!.fillRect(0, 0, W, H);
 
         for (const th of threads) {
-          const N = 150; // Optimizado
+          const N = 100; 
           const pts: [number, number][] = [];
+          const yBase = th.yRel * H;
+          const a1 = th.a1Rel * H;
+          const a2 = th.a2Rel * H;
+          const a3 = th.a3Rel * H;
+
           for (let s = 0; s <= N; s++) {
             const nx = s / N;
             const px = nx * W;
-            const py = th.yBase
-              + Math.sin(nx * Math.PI * 2 * th.f1 + t * th.sp + th.ph1) * th.a1
-              + Math.sin(nx * Math.PI * 2 * th.f2 + t * th.sp * 0.7 + th.ph2) * th.a2
-              + Math.sin(nx * Math.PI * 2 * th.f3 + t * th.sp * 0.4 + th.ph3) * th.a3;
+            const py = yBase
+              + Math.sin(nx * Math.PI * 2 * th.f1 + t * th.sp + th.ph1) * a1
+              + Math.sin(nx * Math.PI * 2 * th.f2 + t * th.sp * 0.7 + th.ph2) * a2
+              + Math.sin(nx * Math.PI * 2 * th.f3 + t * th.sp * 0.4 + th.ph3) * a3;
             pts.push([px, py]);
           }
 
@@ -79,29 +91,21 @@ const NeonThreads: React.FC = () => {
             }
           };
 
-          // Capa 1: Glow exterior
-          createPath();
           ctx!.strokeStyle = `hsla(${th.hue}, 100%, 75%, ${th.glowAlpha * 0.3})`;
           ctx!.lineWidth = th.glow * 3;
-          ctx!.stroke();
+          createPath(); ctx!.stroke();
 
-          // Capa 2: Glow medio
-          createPath();
           ctx!.strokeStyle = `hsla(${th.hue}, 100%, 80%, ${th.glowAlpha})`;
           ctx!.lineWidth = th.glow;
-          ctx!.stroke();
+          createPath(); ctx!.stroke();
 
-          // Capa 3: Hilo brillante
-          createPath();
           ctx!.strokeStyle = `hsla(${th.hue}, 100%, 90%, ${th.alpha * 0.6})`;
           ctx!.lineWidth = th.width * 2;
-          ctx!.stroke();
+          createPath(); ctx!.stroke();
 
-          // Capa 4: Núcleo core
-          createPath();
           ctx!.strokeStyle = `hsla(${th.hue}, 100%, 100%, ${th.alpha})`;
           ctx!.lineWidth = th.width * 0.5;
-          ctx!.stroke();
+          createPath(); ctx!.stroke();
         }
         t += 1;
       }
