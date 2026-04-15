@@ -22,11 +22,6 @@ const CookieConsent: React.FC<CookieConsentProps> = ({ onConfigure }) => {
     setIsVisible(false);
   };
 
-  const handleDecline = () => {
-    localStorage.setItem("cookie-consent", "false");
-    setIsVisible(false);
-  };
-
   return (
     <AnimatePresence>
       {isVisible && (
