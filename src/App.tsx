@@ -132,10 +132,10 @@ function App() {
 
           <div className="relative z-10 w-full h-full flex items-center justify-center">
             {/* Componente estándar de Google para 3D (No usa React-Three-Fiber, es nativo) */}
-            {/* @ts-expect-error - model-viewer es un componente web estándar */}
+            {/* @ts-ignore */}
             <model-viewer
               ref={modelRef}
-              src="/robot.glb"
+              src={`${import.meta.env.BASE_URL}robot.glb`}
               alt="Nexum Labs Robot"
               autoplay
               camera-controls
@@ -145,8 +145,7 @@ function App() {
               exposure="1"
               camera-orbit="90deg 85deg 105%"
               style={{ width: '100%', height: '100%', background: 'transparent', outline: 'none' }}
-            >
-            </model-viewer>
+            />
           </div>
         </motion.div>
       </section>
@@ -381,7 +380,7 @@ function App() {
 
               <div className="w-24 h-24 rounded-full border border-purple-500/30 overflow-hidden mb-8 shadow-[0_0_20px_rgba(168,85,247,0.2)]">
                 <img
-                  src="/foto-alfonso.png"
+                  src={`${import.meta.env.BASE_URL}foto-alfonso.png`}
                   alt="Alfonso - Cofundador de Nexum Labs"
                   className="w-full h-full object-cover grayscale-[20%] hover:grayscale-0 transition-all duration-500"
                 />
@@ -408,7 +407,7 @@ function App() {
 
               <div className="w-24 h-24 rounded-full border border-emerald-500/30 overflow-hidden mb-8 shadow-[0_0_20px_rgba(16,185,129,0.2)]">
                 <img
-                  src="/edgar-foto.png"
+                  src={`${import.meta.env.BASE_URL}edgar-foto.png`}
                   alt="Edgar - Cofundador de Nexum Labs"
                   className="w-full h-full object-cover grayscale-[20%] hover:grayscale-0 transition-all duration-500"
                 />

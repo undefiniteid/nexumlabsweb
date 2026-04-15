@@ -15,6 +15,7 @@ interface VortexProps {
   rangeSpeed?: number;
   baseRadius?: number;
   rangeRadius?: number;
+  rangeHue?: number;
   backgroundColor?: string;
 }
 
@@ -31,7 +32,7 @@ export const Vortex = (props: VortexProps) => {
   const baseRadius = props.baseRadius || 1;
   const rangeRadius = props.rangeRadius || 2;
   const baseHue = props.baseHue || 220;
-  const rangeHue = 100;
+  const rangeHue = props.rangeHue || 100;
   const backgroundColor = props.backgroundColor || "transparent";
 
   // All animation state in a single stable ref
@@ -51,7 +52,7 @@ export const Vortex = (props: VortexProps) => {
   };
   const lerp = (a: number, b: number, t: number) => (1 - t) * a + t * b;
 
-  const initParticle = (i: number, W: number, H: number) => {
+  const initParticle = (i: number, W: number) => {
     const p = s.current.particleProps;
     p[i]     = rand(W);
     p[i + 1] = s.current.center[1] + rand(rangeY) - rangeY * 0.5;
@@ -64,11 +65,11 @@ export const Vortex = (props: VortexProps) => {
     p[i + 8] = baseHue + rand(rangeHue);       // hue
   };
 
-  const initParticles = (W: number, H: number) => {
+  const initParticles = (W: number) => {
     s.current.tick = 0;
     s.current.particleProps = new Float32Array(particlePropsLength);
     for (let i = 0; i < particlePropsLength; i += particlePropCount) {
-      initParticle(i, W, H);
+      initParticle(i, W);
     }
   };
 
@@ -105,7 +106,7 @@ export const Vortex = (props: VortexProps) => {
       life++;
 
       if (x2 > W || x2 < 0 || y2 > H || y2 < 0 || life > ttl) {
-        initParticle(i, W, H);
+        initParticle(i, W);
       } else {
         ctx.save();
         ctx.lineCap = "round";
@@ -147,11 +148,11 @@ export const Vortex = (props: VortexProps) => {
     };
 
     const { W, H } = resize();
-    initParticles(W, H);
+    initParticles(W);
 
     // Dynamic resize observer for content growth (like accordions)
     const resizeObserver = new ResizeObserver(() => {
-      const { W, H } = resize();
+      resize();
       // Only re-init if size changes significantly to keep frame rate
       // but canvas size *must* be set
     });

@@ -46,7 +46,7 @@ const PortfolioHeader = () => {
             <a href="#" className="flex items-center space-x-2 group relative">
               <div className="w-12 h-12 sm:w-16 sm:h-16 flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
                 {/* Fluid Logo Image */}
-                <img src="/logo-x.png" alt="Nexum Labs Logo" className="w-full h-full object-contain" onError={(e) => {
+                <img src={`${import.meta.env.BASE_URL}logo-x.png`} alt="Nexum Labs Logo" className="w-full h-full object-contain" onError={(e) => {
                   (e.target as HTMLImageElement).style.display = 'none';
                   (e.target as HTMLImageElement).nextSibling && ((e.target as HTMLImageElement).nextSibling as HTMLElement).classList.remove('hidden');
                 }} />

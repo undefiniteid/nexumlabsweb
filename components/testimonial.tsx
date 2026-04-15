@@ -38,12 +38,12 @@ function Testimonial() {
               </p>
             </div>
             <div className="flex items-center">
-              <img
-                src="/foto-guillermo-publidental.png"
-                alt="Guillermo P."
-                className="w-12 h-12 rounded-full object-cover mr-4"
-                onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => { (e.target as HTMLImageElement).onerror = null; (e.target as HTMLImageElement).src = "https://placehold.co/48x48/1e293b/FFFFFF?text=GP" }}
-              />
+                <img
+                  src={`${import.meta.env.BASE_URL}foto-guillermo-publidental.png`}
+                  alt="Guillermo P."
+                  className="w-12 h-12 rounded-full object-cover mr-4"
+                  onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => { (e.target as HTMLImageElement).onerror = null; (e.target as HTMLImageElement).src = "https://placehold.co/48x48/1e293b/FFFFFF?text=GP" }}
+                />
               <div>
                 <p className="font-semibold text-white">Guillermo P.</p>
                 <p className="text-sm text-white/50">Director de publidental.es</p>
@@ -65,7 +65,7 @@ function Testimonial() {
               </p>
               <div className="flex items-center">
                 <img
-                  src="/foto-ventanas-banuls.png"
+                  src={`${import.meta.env.BASE_URL}foto-ventanas-banuls.png`}
                   alt="Alejandro Bañuls"
                   className="w-12 h-12 rounded-full object-contain bg-white p-1 mr-4"
                   onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => { (e.target as HTMLImageElement).onerror = null; (e.target as HTMLImageElement).src = "https://placehold.co/48x48/1e293b/FFFFFF?text=AB" }}
@@ -91,7 +91,7 @@ function Testimonial() {
                 </p>
                 <div className="flex items-center">
                   <img
-                    src="/foto-tadeo-fundadores.png"
+                    src={`${import.meta.env.BASE_URL}foto-tadeo-fundadores.png`}
                     alt="Tadeo Casas"
                     className="w-10 h-10 rounded-full object-cover mr-3"
                     onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => { (e.target as HTMLImageElement).onerror = null; (e.target as HTMLImageElement).src = "https://placehold.co/40x40/1e293b/FFFFFF?text=TC" }}
@@ -115,7 +115,7 @@ function Testimonial() {
                 </p>
                 <div className="flex items-center">
                   <img
-                    src="/foto-muebles-yuste.png"
+                    src={`${import.meta.env.BASE_URL}foto-muebles-yuste.png`}
                     alt="Alberto Yuste"
                     className="w-10 h-10 rounded-full object-cover mr-3"
                     onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => { (e.target as HTMLImageElement).onerror = null; (e.target as HTMLImageElement).src = "https://placehold.co/40x40/1e293b/FFFFFF?text=AY" }}

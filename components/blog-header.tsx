@@ -37,7 +37,7 @@ const BlogHeader = () => {
             <div className="flex-shrink-0 flex items-center">
               <a href="#" className="flex items-center">
                 <img 
-                  src="/nexum-labs-logo.png" 
+                  src={`${import.meta.env.BASE_URL}nexum-labs-logo.png`} 
                   alt="Nexum Labs" 
                   className="h-20 md:h-24 w-auto object-contain scale-[1.3] md:scale-[1.5] origin-left" 
                   style={{ 
@@ -100,7 +100,7 @@ const BlogHeader = () => {
           <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-800">
             <a href="#" className="flex items-center">
               <img 
-                src="/nexum-labs-logo.png" 
+                src={`${import.meta.env.BASE_URL}nexum-labs-logo.png`} 
                 alt="Nexum Labs" 
                 className="h-16 w-auto object-contain scale-[1.3] origin-left" 
                 style={{ 
