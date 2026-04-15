@@ -18,7 +18,7 @@ const Footer = ({ onLegalClick }: { onLegalClick: (type: "AvisoLegal" | "Privaci
         <div className="space-y-6">
           <div className="flex items-center space-x-2">
             <div className="w-10 h-10 flex items-center justify-center">
-              <img src={`${import.meta.env.BASE_URL}nexum-labs-logo.png`} alt="Nexum Labs" className="w-full h-full object-contain" onError={(e) => {
+              <img src={`${import.meta.env.BASE_URL}logo-x.png`} alt="Nexum Labs" className="w-full h-full object-contain" onError={(e) => {
                   (e.target as HTMLImageElement).style.display = 'none';
                   (e.target as HTMLImageElement).nextSibling && ((e.target as HTMLImageElement).nextSibling as HTMLElement).classList.remove('hidden');
                 }} />
