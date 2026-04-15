@@ -310,7 +310,9 @@ export default function OrbitingSkills() {
     <div className="relative flex items-center justify-center">
       <div 
         className="relative w-[320px] h-[320px] md:w-[450px] md:h-[450px] flex items-center justify-center -ml-8 md:ml-0 scale-90 md:scale-100"
-        onMouseEnter={() => setIsPaused(true)}
+        onMouseEnter={() => {
+          if (window.matchMedia('(hover: hover)').matches) setIsPaused(true);
+        }}
         onMouseLeave={() => setIsPaused(false)}
       >
         

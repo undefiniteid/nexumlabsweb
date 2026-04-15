@@ -17,7 +17,7 @@ const NeonThreads: React.FC = () => {
 
     const observer = new IntersectionObserver((entries) => {
       isVisible = entries[0].isIntersecting;
-    }, { threshold: 0.1 });
+    }, { threshold: 0.01 });
 
     observer.observe(canvas);
 

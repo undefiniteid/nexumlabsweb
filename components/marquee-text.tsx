@@ -61,9 +61,17 @@ export const LinearLoop: FC<LinearLoopProps> = ({
 
   // Effect to measure the width of a single text instance
   useEffect(() => {
-    if (measureRef.current) {
-      setSpacing(measureRef.current.getComputedTextLength());
-    }
+    const measure = () => {
+      if (measureRef.current) {
+        setSpacing(measureRef.current.getComputedTextLength());
+      }
+    };
+
+    measure();
+    // Re-measure after font load and on resize
+    document.fonts.ready.then(measure);
+    window.addEventListener("resize", measure);
+    return () => window.removeEventListener("resize", measure);
   }, [text, className]);
 
   // Effect to measure the total length of the SVG path
@@ -178,7 +186,7 @@ export const LinearLoop: FC<LinearLoopProps> = ({
       onPointerLeave={endDrag}
     >
       <svg
-        className="select-none w-full overflow-visible block text-[3rem] font-bold tracking-[6px] uppercase leading-none"
+        className="select-none w-full overflow-visible block text-[1.8rem] md:text-[3rem] font-bold tracking-[6px] uppercase leading-none"
         viewBox="0 0 1440 160" // Adjusted viewBox for better vertical alignment
       >
         {/* Hidden text element used only for measuring the width */}
