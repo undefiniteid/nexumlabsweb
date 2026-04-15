@@ -37,7 +37,6 @@ export const LinearLoop: FC<LinearLoopProps> = ({
 
   const uid = useId();
   const pathId = `linear-path-${uid.replace(/:/g, "")}`;
-  const pathD = "M-1000,90 L6000,90";
 
   const dragRef = useRef(false);
   const lastXRef = useRef(0);
