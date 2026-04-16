@@ -5,7 +5,6 @@ import {
   useMemo,
   useId,
   type FC,
-  type PointerEvent,
 } from "react";
 
 interface LinearLoopProps {
