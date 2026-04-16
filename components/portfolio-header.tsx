@@ -35,8 +35,8 @@ const PortfolioHeader = () => {
 
   return (
     <header className={`fixed top-0 left-0 right-0 z-50 w-full transition-all duration-500 ease-out ${
-      isScrolled 
-        ? 'bg-black/40 backdrop-blur-xl shadow-[0_4px_30px_rgba(0,0,0,0.5)] border-b border-white/10' 
+      isScrolled || isMenuOpen
+        ? 'bg-black/95 backdrop-blur-2xl shadow-[0_4px_30px_rgba(0,0,0,0.8)] border-b border-white/10' 
         : 'bg-transparent border-b border-transparent pt-4'
     }`}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-12 max-w-7xl">

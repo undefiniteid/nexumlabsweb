@@ -107,10 +107,10 @@ function App() {
             El futuro del trabajo es <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">automatizado</span>
           </h1>
           <p className="text-lg md:text-xl text-white/60 mb-10 font-light leading-relaxed max-w-lg">
-            En Nexum Labs diseñamos la integración de Inteligencia Artificial que{" "}
-            <TextHighlighter highlightColor="rgba(59, 130, 246, 0.4)" className="text-white/90">automatiza tareas</TextHighlighter>,{" "}
-            <TextHighlighter highlightColor="rgba(168, 85, 247, 0.4)" transition={{ delay: 0.6 }} className="text-white/90">ahorras a tus clientes</TextHighlighter> y{" "}
-            <TextHighlighter highlightColor="rgba(6, 182, 212, 0.4)" transition={{ delay: 1.0 }} className="text-white/90">ganas escalabilidad</TextHighlighter>.
+            En Nexum Labs diseñamos integraciones de Inteligencia Artificial que{" "}
+            <TextHighlighter highlightColor="rgba(59, 130, 246, 0.4)" className="text-white/90">automatizan tareas</TextHighlighter>,{" "}
+            <TextHighlighter highlightColor="rgba(168, 85, 247, 0.4)" transition={{ delay: 0.6 }} className="text-white/90">optimizan tu tiempo</TextHighlighter> y{" "}
+            <TextHighlighter highlightColor="rgba(6, 182, 212, 0.4)" transition={{ delay: 1.0 }} className="text-white/90">potencian tu escalabilidad</TextHighlighter>.
             Soluciones a la medida, implementación ágil. Con resultados.
           </p>
           <div className="inline-block cursor-pointer mt-2">
@@ -359,7 +359,7 @@ function App() {
         </div>
 
         <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-white mb-6 text-center">
-          Dos personas - Una misma{" "}
+          Tecnología y estrategia - Una misma{" "}
           <span className="relative inline-block">
             visión
             <span className="absolute -bottom-1 left-0 w-full h-[3px] bg-gradient-to-r from-blue-500 via-purple-500 to-cyan-500 shadow-[0_0_10px_rgba(34,211,238,0.8)] rounded-full"></span>

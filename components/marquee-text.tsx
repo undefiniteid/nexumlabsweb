@@ -113,15 +113,17 @@ export const LinearLoop: FC<LinearLoopProps> = ({
   const repeats = pathLength && spacing ? Math.ceil(pathLength / spacing) + 2 : 0;
   const ready = pathLength > 0 && spacing > 0;
 
-  const onPointerDown = (e: PointerEvent) => {
+  const onPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
     if (!interactive) return;
     dragRef.current = true;
     lastXRef.current = e.clientX;
     velRef.current = 0;
-    (e.target as HTMLElement).setPointerCapture(e.pointerId);
+    try {
+      e.currentTarget.setPointerCapture(e.pointerId);
+    } catch {}
   };
 
-  const onPointerMove = (e: PointerEvent) => {
+  const onPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
     if (!interactive || !dragRef.current) return;
     const dx = e.clientX - lastXRef.current;
     lastXRef.current = e.clientX;
@@ -138,12 +140,15 @@ export const LinearLoop: FC<LinearLoopProps> = ({
     });
   };
 
-  const endDrag = () => {
+  const endDrag = (e: React.PointerEvent<HTMLDivElement>) => {
     if (!interactive) return;
     dragRef.current = false;
     if (Math.abs(velRef.current) > 1) {
       dirRef.current = velRef.current > 0 ? "right" : "left";
     }
+    try {
+      e.currentTarget.releasePointerCapture(e.pointerId);
+    } catch {}
   };
 
   return (
