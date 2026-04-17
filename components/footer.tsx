@@ -6,7 +6,7 @@ const XIcon = ({ size = 24, className = "" }: { size?: number; className?: strin
   </svg>
 );
 
-const Footer = ({ onLegalClick }: { onLegalClick: (type: "AvisoLegal" | "Privacidad" | "Cookies") => void }) => {
+const Footer = ({ onLegalClick }: { onLegalClick: (type: "AvisoLegal" | "Privacidad" | "Cookies" | "Terminos") => void }) => {
   return (
     <footer className="relative bg-black text-white py-16 px-6 font-sans border-t border-white/10 z-20">
       {/* Subtle top glow */}
@@ -120,9 +120,9 @@ const Footer = ({ onLegalClick }: { onLegalClick: (type: "AvisoLegal" | "Privaci
               </button>
             </li>
             <li>
-              <a href="#" className="text-sm text-white/60 hover:text-white transition-colors duration-300">
+              <button onClick={() => onLegalClick("Terminos")} className="text-sm text-white/60 hover:text-white transition-colors duration-300 cursor-pointer">
                 Términos de Servicio
-              </a>
+              </button>
             </li>
           </ul>
         </div>

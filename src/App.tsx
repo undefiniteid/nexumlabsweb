@@ -29,11 +29,12 @@ function App() {
     content: null,
   });
 
-  const openLegal = (type: "AvisoLegal" | "Privacidad" | "Cookies") => {
+  const openLegal = (type: "AvisoLegal" | "Privacidad" | "Cookies" | "Terminos") => {
     const titles = {
       AvisoLegal: "Aviso Legal",
       Privacidad: "Política de Privacidad",
       Cookies: "Política de Cookies",
+      Terminos: "Términos de Servicio",
     };
     setLegalModal({
       isOpen: true,

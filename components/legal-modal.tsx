@@ -144,6 +144,31 @@ export const LegalContent = {
       </section>
     </>
   ),
+
+  Terminos: () => (
+    <>
+      <section>
+        <h3 className="text-white font-bold text-lg mb-2">1. Objeto y Ámbito de Aplicación</h3>
+        <p>
+          Las presentes condiciones generales rigen el acceso y uso del sitio web, así como la contratación de los servicios de consultoría tecnológica, desarrollo y automatización ofrecidos por Nexum Labs.
+        </p>
+      </section>
+
+      <section>
+        <h3 className="text-white font-bold text-lg mb-2">2. Condiciones de Servicio</h3>
+        <p>
+          La prestación de nuestros servicios estará sujeta a un acuerdo de colaboración específico o presupuesto aceptado, donde se detallarán alcances, plazos, condiciones de entrega y costes asociados a cada proyecto.
+        </p>
+      </section>
+
+      <section>
+        <h3 className="text-white font-bold text-lg mb-2">3. Obligaciones del Cliente</h3>
+        <p>
+          El cliente se compromete a facilitar toda la información y accesos necesarios para el correcto desarrollo de los servicios contratados y asume la responsabilidad sobre la licitud de los datos proporcionados a nuestros sistemas.
+        </p>
+      </section>
+    </>
+  ),
 };
 
 export default LegalModal;
