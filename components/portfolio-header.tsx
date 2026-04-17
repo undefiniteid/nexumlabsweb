@@ -73,9 +73,8 @@ const PortfolioHeader = () => {
             ))}
           </nav>
 
-          {/* Desktop CTA Buttons */}
           <div className="hidden md:flex items-center space-x-3">
-            <button className="relative group p-[1px] rounded-full overflow-hidden transition-transform hover:scale-105 active:scale-95 shadow-[0_0_20px_rgba(37,99,235,0.2)] hover:shadow-[0_0_30px_rgba(37,99,235,0.5)]">
+            <a href="https://calendly.com/alfonsoalegregarcia/llamada" target="_blank" rel="noopener noreferrer" className="relative group p-[1px] rounded-full overflow-hidden transition-transform hover:scale-105 active:scale-95 shadow-[0_0_20px_rgba(37,99,235,0.2)] hover:shadow-[0_0_30px_rgba(37,99,235,0.5)] block">
               {/* Animated Aurora Border */}
               <div className="absolute inset-0 bg-[length:200%_200%] animate-aurora bg-gradient-to-r from-blue-500 via-purple-500 to-cyan-500 opacity-80"></div>
               
@@ -83,7 +82,7 @@ const PortfolioHeader = () => {
                 <span className="text-sm font-bold text-white tracking-wide">Hablemos</span>
                 <ArrowRight className="h-4 w-4 text-blue-400 group-hover:translate-x-1 transition-transform" />
               </div>
-            </button>
+            </a>
           </div>
 
           {/* Mobile Menu Button */}
@@ -113,13 +112,13 @@ const PortfolioHeader = () => {
                 </a>
               ))}
               <div className="pt-4 mt-2 px-4">
-                <button className="relative group w-full p-[1px] rounded-xl overflow-hidden active:scale-95 transition-transform">
+                <a href="https://calendly.com/alfonsoalegregarcia/llamada" target="_blank" rel="noopener noreferrer" className="relative group w-full p-[1px] rounded-xl overflow-hidden active:scale-95 transition-transform block">
                   <div className="absolute inset-0 bg-[length:200%_200%] animate-aurora bg-gradient-to-r from-blue-500 via-purple-500 to-cyan-500 opacity-80"></div>
                   <div className="relative bg-[#0a0a0a] rounded-[11px] px-4 py-3 flex justify-center items-center space-x-2">
                     <span className="text-sm font-bold text-white">Hablemos</span>
                     <ArrowRight className="h-4 w-4 text-blue-400" />
                   </div>
-                </button>
+                </a>
               </div>
             </div>
           </div>

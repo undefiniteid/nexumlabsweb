@@ -139,7 +139,7 @@ const Footer = ({ onLegalClick }: { onLegalClick: (type: "AvisoLegal" | "Privaci
             contacto@nexumlabs.es
           </a>
           <div className="pt-2">
-            <button className="relative group inline-flex items-center justify-center px-8 py-3.5 font-bold text-white rounded-full overflow-hidden transition-all hover:scale-105 shadow-[0_0_20px_rgba(37,99,235,0.4)] hover:shadow-[0_0_40px_rgba(168,85,247,0.6)] cursor-pointer">
+            <a href="https://calendly.com/alfonsoalegregarcia/llamada" target="_blank" rel="noopener noreferrer" className="relative group inline-flex items-center justify-center px-8 py-3.5 font-bold text-white rounded-full overflow-hidden transition-all hover:scale-105 shadow-[0_0_20px_rgba(37,99,235,0.4)] hover:shadow-[0_0_40px_rgba(168,85,247,0.6)] cursor-pointer block">
               {/* Vibrant Gradient Background */}
               <div className="absolute inset-0 bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-500 group-hover:from-blue-500 group-hover:via-purple-500 group-hover:to-cyan-400 transition-all duration-500"></div>
               
@@ -153,7 +153,7 @@ const Footer = ({ onLegalClick }: { onLegalClick: (type: "AvisoLegal" | "Privaci
               
               {/* Shimmer Effect */}
               <div className="absolute top-0 -inset-x-full h-full w-1/2 bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12 group-hover:animate-[shimmer_1.5s_infinite]"></div>
-            </button>
+            </a>
           </div>
         </div>
 

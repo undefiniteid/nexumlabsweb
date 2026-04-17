@@ -113,11 +113,11 @@ function App() {
             <TextHighlighter highlightColor="rgba(6, 182, 212, 0.4)" transition={{ delay: 1.0 }} className="text-white/90">potencian tu escalabilidad</TextHighlighter>.
             Soluciones a la medida, implementación ágil. Con resultados.
           </p>
-          <div className="inline-block cursor-pointer mt-2">
+          <a href="https://calendly.com/alfonsoalegregarcia/llamada" target="_blank" rel="noopener noreferrer" className="inline-block cursor-pointer mt-2">
             <ShimmerButton className="text-base md:text-lg font-semibold text-white px-6 md:px-10 py-3 md:py-4 tracking-wide w-full md:w-auto">
               Agenda una demo
             </ShimmerButton>
-          </div>
+          </a>
         </motion.div>
 
         {/* Robot / Image placeholder area */}
@@ -251,7 +251,7 @@ function App() {
         </p>
         <br />
 
-        <button className="relative group inline-flex items-center justify-center px-10 py-4 font-bold text-white bg-blue-950/30 border border-blue-500/50 rounded-full overflow-hidden transition-all hover:scale-105 hover:bg-blue-900/40 shadow-[0_0_20px_rgba(37,99,235,0.3)] hover:shadow-[0_0_30px_rgba(37,99,235,0.5)] backdrop-blur-md">
+        <a href="https://calendly.com/alfonsoalegregarcia/llamada" target="_blank" rel="noopener noreferrer" className="relative group inline-flex items-center justify-center px-10 py-4 font-bold text-white bg-blue-950/30 border border-blue-500/50 rounded-full overflow-hidden transition-all hover:scale-105 hover:bg-blue-900/40 shadow-[0_0_20px_rgba(37,99,235,0.3)] hover:shadow-[0_0_30px_rgba(37,99,235,0.5)] backdrop-blur-md">
           {/* Inner Glow */}
           <div className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-400/0 via-blue-400/10 to-blue-400/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
           {/* Text */}
@@ -259,7 +259,7 @@ function App() {
           {/* Hover highlight line at top */}
           <div className="absolute top-0 inset-x-0 h-[1px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
           <div className="absolute bottom-0 inset-x-0 h-[1px] bg-gradient-to-r from-transparent via-blue-500 to-transparent opacity-50 group-hover:opacity-100 transition-opacity duration-500"></div>
-        </button>
+        </a>
       </section>
 
       {/* 5. Our Stack Section (Orbiting Skills on Left, Text on Right) */}
